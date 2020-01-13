@@ -74,6 +74,21 @@ server.delete('/api/hubs/:id', (req, res) => {
 });
 
 // update a Hub
+server.put('/api/hubs/:id', (req, res) => {
+  const hubData = req.body;
+  const id = req.params.id;
+
+  Hubs.update(id, hubData)
+    .then(updated => {
+      res.status(200).json(updated);
+    })
+    .catch(error => {
+      console.log(error);
+      res.status(500).json({
+        errorMessage: 'sorry, we ran into an error removing the hub'
+      });
+    });
+});
 
 const port = 8000;
 server.listen(port, () => console.log(`\n ** api on port: ${port} ** \n`));
